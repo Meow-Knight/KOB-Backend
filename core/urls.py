@@ -19,9 +19,14 @@ from django.conf.urls import include, url
 from django.conf import settings
 from django.conf.urls.static import static
 
+from api_account.views import GoogleLogin
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r"api/v1/account/", include('api_account.urls')),
     url(r"api/v1/admin/", include('api_admin.urls')),
     url(r"api/v1/beer/", include('api_beer.urls')),
+    url(r'auth/', include('dj_rest_auth.urls')),
+    url(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
+    url(r'social-login/google/', GoogleLogin.as_view(), name='google_login'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
