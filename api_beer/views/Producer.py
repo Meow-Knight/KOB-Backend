@@ -1,7 +1,7 @@
 from rest_framework import viewsets
 
-from api_admin.serializers import ProducerSerializer
-from api_admin.models import Producer
+from api_beer.serializers import ProducerSerializer
+from api_beer.models import Producer
 
 
 class CreateProducerViewSet(viewsets.ModelViewSet):
