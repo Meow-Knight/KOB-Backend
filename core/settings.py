@@ -45,16 +45,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    # 'rest_framework_simplejwt',
+    'rest_framework_simplejwt',
     "corsheaders",
     "django.contrib.sites",
-    # Auth & social auth
-    "dj_rest_auth",
-    "allauth",
-    "allauth.account",
-    "dj_rest_auth.registration",
-    "allauth.socialaccount",
-    "allauth.socialaccount.providers.google",
 
     # modules
     'api_base',
@@ -66,20 +59,6 @@ INSTALLED_APPS = [
     'drf_yasg',
 ]
 
-SOCIALACCOUNT_PROVIDERS = {
-    'google': {
-        'SCOPE': [
-            'profile',
-            'email',
-        ],
-        'AUTH_PARAMS': {
-            'access_type': 'online',
-        }
-    }
-}
-
-SOCIALACCOUNT_EMAIL_VERIFICATION = "none"
-SOCIALACCOUNT_EMAIL_REQUIRED = False
 
 REST_USE_JWT = True
 
@@ -122,10 +101,9 @@ WSGI_APPLICATION = 'core.wsgi.application'
 REST_FRAMEWORK = {
     "DEFAULT_PERMISSION_CLASSES": ("rest_framework.permissions.IsAuthenticated",),
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        # 'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
         'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        "dj_rest_auth.utils.JWTCookieAuthentication",
     )
 }
 

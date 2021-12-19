@@ -22,6 +22,9 @@ from django.conf.urls.static import static
 from rest_framework import permissions
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
+from rest_framework_simplejwt.views import TokenRefreshView
+
+from api_account.views import MyGoogleLogin, LoginView
 
 schema_view = get_schema_view(
    openapi.Info(
@@ -36,8 +39,6 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
-from api_account.views import GoogleLogin
-
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
@@ -46,7 +47,7 @@ urlpatterns = [
     url(r"api/v1/account/", include('api_account.urls')),
     url(r"api/v1/admin/", include('api_admin.urls')),
     url(r"api/v1/beer/", include('api_beer.urls')),
-    url(r'auth/', include('dj_rest_auth.urls')),
-    url(r'^accounts/', include('allauth.urls'), name='socialaccount_signup'),
-    url(r'social-login/google/', GoogleLogin.as_view(), name='google_login'),
+    url('admin_login', LoginView.as_view(), name='admin_login'),
+    url('login', MyGoogleLogin.as_view(), name='login'),
+    path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
