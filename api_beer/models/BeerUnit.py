@@ -8,3 +8,4 @@ class BeerUnit(TimeStampedModel):
 
     class Meta:
         db_table = "beer_unit"
+        ordering = ('name',)

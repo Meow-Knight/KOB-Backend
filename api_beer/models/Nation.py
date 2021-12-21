@@ -9,3 +9,4 @@ class Nation(TimeStampedModel):
 
     class Meta:
         db_table = "nation"
+        ordering = ('name',)

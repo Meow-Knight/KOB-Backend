@@ -17,3 +17,4 @@ class Beer(TimeStampedModel):
 
     class Meta:
         db_table = "beer"
+        ordering = ('name',)
