@@ -8,3 +8,4 @@ class Role(TimeStampedModel):
 
     class Meta:
         db_table = "role"
+
