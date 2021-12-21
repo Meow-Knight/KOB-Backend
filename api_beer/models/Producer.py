@@ -9,3 +9,4 @@ class Producer(TimeStampedModel):
 
     class Meta:
         db_table = "producer"
+        ordering = ('name',)

@@ -18,3 +18,4 @@ class Account(AbstractUser):
 
     class Meta:
         db_table = "account"
+        ordering = ('date_joined',)

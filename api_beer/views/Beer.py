@@ -22,3 +22,21 @@ class BeerViewSet(BaseViewSet):
             BeerService.create_beer_with_photos(serializer, images)
             return Response({"details": serializer.data}, status=status.HTTP_200_OK)
         return Response({"details": "Cannot create new beer record"}, status=status.HTTP_400_BAD_REQUEST)
+
+    def list(self, request, *args, **kwargs):
+        query_set = Beer.objects
+        search_query = request.query_params.get("q", "")
+        query_set = query_set.filter(name__icontains=search_query)
+        sort_query = request.query_params.get("sort")
+        if sort_query:
+            try:
+                if sort_query.startswith("-"):
+                    Beer._meta.get_field(sort_query[1:])
+                else:
+                    Beer._meta.get_field(sort_query)
+                query_set = query_set.order_by(sort_query)
+            except:
+                pass
+
+        self.queryset = query_set
+        return super().list(request, *args, **kwargs)
