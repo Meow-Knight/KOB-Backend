@@ -3,3 +3,4 @@ from .BeerUnit import BeerUnitSerializer
 from .Nation import NationSerializer
 from .Beer import BeerSerializer, ListBeerSerializer
 from .BeerShipment import BeerShipmentSerializer, ListBeerShipmentSerializer
+from .User import UserSerializer, ListUserSerializer

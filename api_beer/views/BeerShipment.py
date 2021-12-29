@@ -12,22 +12,6 @@ class BeerShipmentViewSet(BaseViewSet):
         "retrieve": ListBeerShipmentSerializer
     }
 
-    # pagination_class =
-    # def list(self, request, *args, **kwargs):
-    #     s = request.GET.get('s')
-    #     sort = request.GET.get('sort')
-    #     beer_shipment = BeerShipment.objects.all()
-    #
-    #     if s:
-    #         beer_shipment = BeerShipment.objects.filter(beer__name__icontains=s)
-    #     if sort == 'asc':
-    #         beer_shipment = BeerShipment.objects.order_by('shipment_date')
-    #     elif sort == 'desc':
-    #         beer_shipment = BeerShipment.objects.order_by('-shipment_date')
-    #
-    #     serializer = BeerShipmentSerializer(beer_shipment, many=True)
-    #     return Response(serializer.data)
-
     def list(self, request, *args, **kwargs):
         query_set = BeerShipment.objects
         search_query = request.query_params.get("q", "")
