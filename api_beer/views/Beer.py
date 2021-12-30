@@ -1,17 +1,16 @@
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser, IsAuthenticated
+from rest_framework.permissions import IsAdminUser
 from rest_framework.response import Response
 
 from api_base.views import BaseViewSet
 from api_beer.models import Beer
-from api_beer.serializers import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, ItemBeerSerializer, \
-    DropdownBeerSerializer
+from api_beer.serializers import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, DropdownBeerSerializer
 from api_beer.services import BeerService
 
 
 class BeerViewSet(BaseViewSet):
-    permission_classes = []
+    permission_classes = [IsAdminUser]
     serializer_class = BeerSerializer
     queryset = Beer.objects.all()
     serializer_map = {

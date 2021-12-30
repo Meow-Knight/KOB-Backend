@@ -6,14 +6,14 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
+from api_account.models import Account
 from api_account.serializers import AccountCheckoutSerializer
 from api_base.views import BaseViewSet
 from api_beer.models import Beer, Cart, BeerDiscount
 from api_beer.serializers import ListBeerSerializer
 from api_order.models import OrderDetail, OrderStatus, Order
-from api_order.serializers import OrderCheckoutSerializer, OrderSerializer, OrderHistorySerializer
+from api_order.serializers import OrderHistorySerializer, OrderCheckoutSerializer, OrderSerializer
 from api_order.services import OrderService
-from api_account.models import Account
 
 
 class OrderViewSet(BaseViewSet):
