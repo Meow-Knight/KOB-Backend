@@ -6,5 +6,4 @@ from .BeerPhoto import BeerPhoto
 from .Discount import Discount
 from .BeerDiscount import BeerDiscount
 from .BeerShipment import BeerShipment
-from .User import User
 

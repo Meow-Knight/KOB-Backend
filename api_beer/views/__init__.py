@@ -3,4 +3,4 @@ from .BeerUnit import BeerUnitViewSet
 from .Nation import NationViewSet
 from .Beer import BeerViewSet
 from .BeerShipment import BeerShipmentViewSet
-from .User import UserViewSet
+from .BeerDetail import BeerDetailViewSet
