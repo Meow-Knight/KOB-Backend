@@ -13,7 +13,7 @@ class BeerDetailViewSet(BaseViewSet):
     serializer_class = BeerDetailSerializer
     queryset = Beer.objects.all()
 
-    @action(detail=True, methods=['get'])
+    @action(detail=True, methods=['get'], permission_classes=[AllowAny])
     def info(self, request, pk, *args, **kwargs):
         beer = self.get_object()
         beer = BeerDetailSerializer(beer)
@@ -26,7 +26,7 @@ class BeerDetailViewSet(BaseViewSet):
         res_data["BeerRelated"] = query_set.data
         return Response(res_data, status=status.HTTP_200_OK)
 
-    @action(detail=False, methods=['get'])
+    @action(detail=False, methods=['get'], permission_classes=[AllowAny])
     def list_beer(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         beer = ItemBeerSerializer(queryset, many=True)
