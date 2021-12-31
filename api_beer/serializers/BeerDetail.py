@@ -2,7 +2,6 @@ import datetime
 from rest_framework import serializers
 
 from api_beer.models import Beer, BeerPhoto, BeerDiscount
-import json
 
 
 class BeerDetailSerializer(serializers.ModelSerializer):
