@@ -23,12 +23,12 @@ class UserViewSet(BaseViewSet):
     }
 
     def create(self, request, *args, **kwargs):
-        account = request.user
-        data = request.data
-        user = User(address=data['address'], phone=data['phone'], age=data['age'], account=account)
-        user.save()
+        response = {'message': 'Create function is not offered in this path.'}
+        return Response(response, status=status.HTTP_403_FORBIDDEN)
 
-        return Response({"details": "add success"}, status=status.HTTP_200_OK)
+    def update(self, request, *args, **kwargs):
+        response = {'message': 'Update function is not offered in this path.'}
+        return Response(response, status=status.HTTP_403_FORBIDDEN)
 
     def list(self, request, *args, **kwargs):
         query_set = User.objects
