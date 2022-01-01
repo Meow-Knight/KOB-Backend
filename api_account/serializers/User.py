@@ -10,8 +10,6 @@ class UserSerializer(serializers.ModelSerializer):
         fields = ['address', 'phone', 'age']
 
 
-
-
 class EditUserSerializer(serializers.ModelSerializer):
     first_name = serializers.CharField(source='user.account.first_name')
     last_name = serializers.CharField(source='user.account.last_name')
