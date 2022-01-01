@@ -6,10 +6,6 @@ from api_beer.models import BeerDiscount
 class BeerDiscountSerializer(serializers.ModelSerializer):
     class Meta:
         model = BeerDiscount
-        fields = '__all__'
+        fields = ('discount_percent', 'beer', 'discount')
 
 
-class ListBeerDiscountSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = BeerDiscount
-        fields = '__all__'

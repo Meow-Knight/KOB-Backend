@@ -7,8 +7,8 @@ from api_beer.models import Beer, Discount
 
 class BeerDiscount(TimeStampedModel):
     discount_percent = models.IntegerField()
-    beer = models.ForeignKey(Beer, on_delete=models.CASCADE, related_name="beer_discount")
-    discount = models.ForeignKey(Discount, on_delete=models.CASCADE, related_name="beer_discount")
+    beer = models.ForeignKey(Beer, on_delete=models.CASCADE, related_name="beer")
+    discount = models.ForeignKey(Discount, on_delete=models.CASCADE, related_name="beer")
 
     class Meta:
         db_table = "beer_discount"

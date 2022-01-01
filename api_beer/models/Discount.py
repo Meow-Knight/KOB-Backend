@@ -11,6 +11,7 @@ class Discount(TimeStampedModel):
     is_activate = models.BooleanField(default=True)
 
     def clean(self):
+
         if self.start_date > self.end_date:
             raise ValidationError('Start should be before end')
         return super().clean()
