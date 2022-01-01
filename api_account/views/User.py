@@ -49,7 +49,7 @@ class UserViewSet(BaseViewSet):
         self.queryset = query_set
         return super().list(request, *args, **kwargs)
 
-    @action(detail=False, methods=['post'], permission_classes=[IsAuthenticated])
+    @action(detail=False, methods=['put'], permission_classes=[IsAuthenticated])
     def edit(self, request, *args, **kwargs):
         account = request.user
         instance = self.queryset.get(account=account)
