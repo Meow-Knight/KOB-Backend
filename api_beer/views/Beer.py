@@ -3,10 +3,10 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
-from api_beer.serializers import BeerSerializer, ListBeerSerializer
-from api_beer.models import Beer
-from api_beer.services import BeerService
 from api_base.views import BaseViewSet
+from api_beer.models import Beer
+from api_beer.serializers import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, ItemBeerSerializer
+from api_beer.services import BeerService
 
 
 class BeerViewSet(BaseViewSet):
@@ -15,10 +15,12 @@ class BeerViewSet(BaseViewSet):
     queryset = Beer.objects.all()
     serializer_map = {
         "list": ListBeerSerializer,
-        "retrieve": ListBeerSerializer
+        "retrieve": RetrieveBeerSerializer,
     }
     permission_map = {
-        "list": [IsAuthenticated]
+        "list": [],
+        "retrieve": [],
+        "homepage": []
     }
 
     @action(detail=False, methods=['get'])
@@ -51,3 +53,9 @@ class BeerViewSet(BaseViewSet):
 
         self.queryset = query_set
         return super().list(request, *args, **kwargs)
+
+    @action(detail=False, methods=['get'])
+    def homepage(self, request, *args, **kwargs):
+        random_amount = int(request.query_params.get("random_amount", "4"))
+        response_data = BeerService.get_homepage_data(random_amount)
+        return Response(response_data, status=status.HTTP_200_OK)

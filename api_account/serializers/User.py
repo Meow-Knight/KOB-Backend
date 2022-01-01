@@ -21,11 +21,6 @@ class EditUserSerializer(serializers.ModelSerializer):
         model = User
         fields = ['first_name', 'last_name', 'address', 'phone', 'age']
 
-    # def to_internal_value(self, data):
-    #     default_return_value = super(EditUserSerializer, self).to_internal_value(data)
-    #     Account.objects.filter(id = 223).update(field1 = 2)
-    #     return default_return_value
-
 
 class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
