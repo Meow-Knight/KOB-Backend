@@ -1,6 +1,6 @@
 from rest_framework import status
 from rest_framework.decorators import action
-from rest_framework.permissions import IsAdminUser
+from rest_framework.permissions import IsAdminUser, IsAuthenticated
 from rest_framework.response import Response
 
 from api_base.views import BaseViewSet
@@ -10,7 +10,7 @@ from api_beer.services import BeerService
 
 
 class BeerViewSet(BaseViewSet):
-    permission_classes = [IsAdminUser]
+    permission_classes = []
     serializer_class = BeerSerializer
     queryset = Beer.objects.all()
     serializer_map = {
@@ -22,6 +22,10 @@ class BeerViewSet(BaseViewSet):
         "retrieve": [],
         "homepage": []
     }
+
+    @action(detail=False, methods=['get'])
+    def info(self, request, *args, **kwargs):
+        return Response("hehe", status=status.HTTP_200_OK)
 
     def create(self, request, *args, **kwargs):
         images = request.FILES.getlist("images")

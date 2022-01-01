@@ -7,6 +7,7 @@ from api_account.models import Account
 
 
 class AccountViewSet(viewsets.ModelViewSet):
+    permission_classes = []
     serializer_class = AccountInfoSerializer # tmp serializer
     queryset = Account.objects.all()
 
