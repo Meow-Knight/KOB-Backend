@@ -9,7 +9,7 @@ router.register(r'producer', CreateProducerViewSet, basename='producer')
 router.register(r'unit', BeerUnitViewSet, basename='beer_unit')
 router.register(r'nation', NationViewSet, basename='nation')
 router.register(r'shipment', BeerShipmentViewSet, basename='beer_shipment')
-router.register(r'beerdetail', BeerDetailViewSet, basename='beer_user')
+router.register(r'beerdetail', BeerDetailViewSet, basename='beer_detail')
 router.register(r'', BeerViewSet, basename='beer')
 
 urlpatterns = router.urls
