@@ -17,6 +17,14 @@ class BeerDetailSerializer(serializers.ModelSerializer):
         photos = BeerPhoto.objects.filter(beer_id=beer_id).values('link')
         if photos:
             data["photos"] = map(lambda photo: photo['link'], list(photos))
+        photos = BeerPhoto.objects.filter(beer_id=beer_id)
+        discount = BeerDiscount.objects.filter(beer_id=beer_id,
+                                               discount__start_date__lte=datetime.date.today(),
+                                               discount__end_date__gte=datetime.date.today(),
+                                               discount__is_activate=True).values("discount_percent")
+        if discount.exists():
+            discount = discount.first()
+            data.update(discount)
         return data
 
 
