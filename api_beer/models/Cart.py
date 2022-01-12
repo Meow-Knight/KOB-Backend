@@ -14,3 +14,4 @@ class Cart(TimeStampedModel):
         db_table = "cart"
         ordering = ('-created_at',)
         unique_together = ('beer', 'account',)
+
