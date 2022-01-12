@@ -5,7 +5,6 @@ from rest_framework import serializers
 from api_beer.models import Beer, BeerPhoto, Producer, BeerUnit, Nation, BeerDiscount
 
 
-
 class BeerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Beer
@@ -16,7 +15,7 @@ class ListBeerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Beer
         fields = '__all__'
-        depth = 1
+        # depth = 1
 
 
 class RetrieveBeerSerializer(serializers.ModelSerializer):
