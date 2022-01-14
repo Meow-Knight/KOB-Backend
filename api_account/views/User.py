@@ -53,7 +53,6 @@ class UserViewSet(BaseViewSet):
     def edit(self, request, *args, **kwargs):
         account = request.user
         instance = self.queryset.get(account=account)
-        # self.serializer_class = EditUserSerializer
         serializer = self.serializer_class(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)

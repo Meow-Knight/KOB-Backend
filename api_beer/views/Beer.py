@@ -5,7 +5,8 @@ from rest_framework.response import Response
 
 from api_base.views import BaseViewSet
 from api_beer.models import Beer
-from api_beer.serializers import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, ItemBeerSerializer
+from api_beer.serializers import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, ItemBeerSerializer, \
+    DropdownBeerSerializer
 from api_beer.services import BeerService
 
 
@@ -20,7 +21,8 @@ class BeerViewSet(BaseViewSet):
     permission_map = {
         "list": [],
         "retrieve": [],
-        "homepage": []
+        "homepage": [],
+        "get_all_with_name": []
     }
 
     @action(detail=False, methods=['get'])
@@ -53,6 +55,10 @@ class BeerViewSet(BaseViewSet):
 
         self.queryset = query_set
         return super().list(request, *args, **kwargs)
+
+    @action(detail=False, methods=['get'])
+    def get_all_with_name(self, request, *args, **kwargs):
+        return Response(DropdownBeerSerializer(self.get_queryset(), many=True).data)
 
     @action(detail=False, methods=['get'])
     def homepage(self, request, *args, **kwargs):
