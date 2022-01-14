@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
 from api_account.models import User, Account
+from api_account.serializers import AccountInfoSerializer
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -27,3 +28,13 @@ class ListUserSerializer(serializers.ModelSerializer):
         model = User
         fields = '__all__'
         depth = 1
+
+
+class UserViewCheckoutSerializer(serializers.ModelSerializer):
+    first_name = serializers.CharField(source='account.first_name')
+    last_name = serializers.CharField(source='account.last_name')
+    email = serializers.CharField(source='account.email')
+
+    class Meta:
+        model = User
+        fields = ['address', 'phone', 'age', 'first_name', 'last_name', 'email']
