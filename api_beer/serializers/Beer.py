@@ -12,6 +12,12 @@ class BeerSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class DropdownBeerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Beer
+        fields = ('id', 'name',)
+
+
 class ListBeerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Beer
