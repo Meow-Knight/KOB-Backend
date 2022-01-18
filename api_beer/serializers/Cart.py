@@ -24,3 +24,7 @@ class BeerDetailCartSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('id', 'amount', 'beer',)
 
+
+
+
+

@@ -7,13 +7,13 @@ def initial_data(apps, schema_editor):
     order_status_model = apps.get_model("api_beer", "OrderStatus")
 
     order_status = [
-        order_status_model(name="Pending"),
-        order_status_model(name="Confirmed"),
-        order_status_model(name="Delivering"),
-        order_status_model(name="Delivered"),
-        order_status_model(name="Completed"),
-        order_status_model(name="Canceled"),
-        order_status_model(name="Not Received")
+        order_status_model(name="PENDING"),
+        order_status_model(name="CONFIRMED"),
+        order_status_model(name="DELIVERING"),
+        order_status_model(name="DELIVERED"),
+        order_status_model(name="COMPLETED"),
+        order_status_model(name="CANCELED"),
+        order_status_model(name="NOT RECEIVED")
 
 
     ]
