@@ -15,7 +15,6 @@ def initial_data(apps, schema_editor):
         order_status_model(name="CANCELED"),
         order_status_model(name="NOT RECEIVED")
 
-
     ]
 
     order_status_model.objects.bulk_create(order_status)

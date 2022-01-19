@@ -1,3 +1,4 @@
+
 import datetime
 from rest_framework import serializers
 
@@ -26,5 +27,3 @@ class OrderCheckoutSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('id', 'amount', 'beer',)
         depth = 1
-
-

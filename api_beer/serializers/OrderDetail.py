@@ -57,3 +57,4 @@ class OrderHistorySerializer(serializers.ModelSerializer):
                   'shipping_address', 'shipping_phone', 'done_at', 'order_status',
                   'order_detail')
         depth = 1
+

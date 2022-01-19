@@ -55,10 +55,8 @@ class OrderViewSet(BaseViewSet):
         instance = User.objects.get(account=account)
         detail_user = UserViewCheckoutSerializer(instance)
         res_data = {"User": detail_user.data}
-        # carts = Cart.objects.filter(account=account).values_list('beer', 'amount')
         carts = Cart.objects.filter(account=account)
         carts = OrderCheckoutSerializer(carts, many=True)
-        # if carts:
         res_data["cart"] = carts.data
 
         return Response(res_data, status=status.HTTP_200_OK)
@@ -73,9 +71,6 @@ class OrderViewSet(BaseViewSet):
         res_data = {"orders": order.data}
 
         return Response(res_data, status=status.HTTP_200_OK)
-
-
-
 
 
 
