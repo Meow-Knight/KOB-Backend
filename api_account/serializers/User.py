@@ -49,3 +49,4 @@ class UserWithNameSerializer(serializers.ModelSerializer):
 
     def get_full_name(self, obj):
         return '{} {}'.format(obj.account.first_name, obj.account.last_name)
+

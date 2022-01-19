@@ -1,26 +1,21 @@
-from api_beer.serializers import OrderCheckoutSerializer, OrderSerializer, OrderDetailSerializer, OrderHistorySerializer
+from api_beer.serializers import OrderCheckoutSerializer, OrderSerializer, ListBeerSerializer, OrderHistorySerializer
 from api_account.serializers import UserViewCheckoutSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
+from rest_framework.permissions import AllowAny, IsAuthenticated
 from api_base.views import BaseViewSet
-from api_beer.models import Beer, Cart, OrderDetail, OrderStatus, Order
-from api_beer.serializers import ListOrderWithUserSerializer
+from api_beer.models import Beer, Cart, OrderDetail, OrderStatus, Order, BeerDiscount
 from api_account.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
+import datetime
 from django.db.models import Q
+import string
 
 
 class OrderViewSet(BaseViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
-    queryset = Order.objects.all()
-    serializer_map = {
-        "list": ListOrderWithUserSerializer
-    }
-    permission_map = {
-        "list": [IsAdminUser]
-    }
+    queryset = Beer.objects.all()
 
     def create(self, request, *args, **kwargs):
         order_status = OrderStatus.objects.filter(name='PENDING').values('id').first()
@@ -29,7 +24,6 @@ class OrderViewSet(BaseViewSet):
         request.data['order_status'] = order_status['id']
         request.data['user'] = user['id']
         serializer = self.get_serializer(data=request.data)
-        # serializer.data['order_status'] = order_status
         if serializer.is_valid(raise_exception=True):
             order = serializer.save()
             order_detail = []
@@ -38,7 +32,18 @@ class OrderViewSet(BaseViewSet):
             if carts:
                 for cart in carts:
                     beer = Beer.objects.filter(id=cart[1]).first()
-                    order_detail.append(OrderDetail(amount=cart[0], beer=beer, order=order))
+                    beer_price = ListBeerSerializer(beer)
+                    price = cart[0] * beer_price['price'].value
+                    discount = BeerDiscount.objects.filter(beer=beer,
+                                                           discount__start_date__lte=datetime.date.today(),
+                                                           discount__end_date__gte=datetime.date.today(),
+                                                           discount__is_activate=True).values("discount_percent")
+                    if discount.exists():
+                        discount = discount.first()
+                    else:
+                        discount = 0
+                    order_detail.append(OrderDetail(amount=cart[0], price=price,
+                                                    discount=discount['discount_percent'], beer=beer, order=order))
                 OrderDetail.objects.bulk_create(order_detail)
                 Cart.objects.filter(account=account).delete()
                 return Response({"details": serializer.data}, status=status.HTTP_200_OK)
@@ -50,10 +55,8 @@ class OrderViewSet(BaseViewSet):
         instance = User.objects.get(account=account)
         detail_user = UserViewCheckoutSerializer(instance)
         res_data = {"User": detail_user.data}
-        # carts = Cart.objects.filter(account=account).values_list('beer', 'amount')
         carts = Cart.objects.filter(account=account)
         carts = OrderCheckoutSerializer(carts, many=True)
-        # if carts:
         res_data["cart"] = carts.data
 
         return Response(res_data, status=status.HTTP_200_OK)
@@ -62,26 +65,12 @@ class OrderViewSet(BaseViewSet):
     def order_history(self, request, *args, **kwargs):
         account = request.user
         status_query = request.query_params.get("status", "")
-        instance = User.objects.get(account=account)
-        detail_user = UserViewCheckoutSerializer(instance)
-        res_data = {"User": detail_user.data}
-        print(status_query)
-        order = Order.objects.filter(Q(user=instance) & Q(order_status__name__icontains=status_query))
-        order = OrderSerializer(order, many=True)
-        order = list(order.data)
-        # print(order[0]['id'])
-        res_data["beers"] = []
-        # res_data["beers"]["orders"] = []
-        for i in range(len(order)):
-            order_detail = OrderDetail.objects.filter(order__id=order[i]['id'])
-            order_detail = OrderHistorySerializer(order_detail, many=True)
-            res_data["beers"].append(order[i])
-            res_data["beers"].append(order_detail.data)
+        user = User.objects.get(account=account)
+        order = Order.objects.filter(Q(user=user) & Q(order_status__name__icontains=status_query))
+        order = OrderHistorySerializer(order, many=True)
+        res_data = {"orders": order.data}
 
         return Response(res_data, status=status.HTTP_200_OK)
 
-    def list(self, request, *args, **kwargs):
-        status_query = request.query_params.get("status", "")
-        order = Order.objects.filter(order_status__name__icontains=status_query)
-        self.queryset = order
-        return super().list(request, *args, **kwargs)
+
+
