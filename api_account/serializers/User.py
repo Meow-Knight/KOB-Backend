@@ -38,3 +38,14 @@ class UserViewCheckoutSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['address', 'phone', 'age', 'first_name', 'last_name', 'email']
+
+
+class UserWithNameSerializer(serializers.ModelSerializer):
+    full_name = serializers.SerializerMethodField()
+
+    class Meta:
+        model = User
+        fields = ['id', 'full_name']
+
+    def get_full_name(self, obj):
+        return '{} {}'.format(obj.account.first_name, obj.account.last_name)

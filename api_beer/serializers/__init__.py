@@ -7,5 +7,5 @@ from .BeerShipment import BeerShipmentSerializer, ListBeerShipmentSerializer
 from .Cart import CUCartSerializer, BeerDetailCartSerializer
 from .BeerDetail import BeerDetailSerializer, ItemBeerSerializer
 from .Discount import DiscountWithItemBeerSerializer
-from .Order import OrderSerializer, OrderCheckoutSerializer
+from .Order import OrderSerializer, OrderCheckoutSerializer, ListOrderWithUserSerializer
 from .OrderDetail import OrderHistorySerializer, OrderDetailSerializer

@@ -1,20 +1,26 @@
 from api_beer.serializers import OrderCheckoutSerializer, OrderSerializer, OrderDetailSerializer, OrderHistorySerializer
 from api_account.serializers import UserViewCheckoutSerializer
-from rest_framework.permissions import AllowAny, IsAuthenticated
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from api_base.views import BaseViewSet
 from api_beer.models import Beer, Cart, OrderDetail, OrderStatus, Order
+from api_beer.serializers import ListOrderWithUserSerializer
 from api_account.models import User
 from rest_framework.response import Response
 from rest_framework.decorators import action
 from rest_framework import status
 from django.db.models import Q
-import string
 
 
 class OrderViewSet(BaseViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
-    queryset = Beer.objects.all()
+    queryset = Order.objects.all()
+    serializer_map = {
+        "list": ListOrderWithUserSerializer
+    }
+    permission_map = {
+        "list": [IsAdminUser]
+    }
 
     def create(self, request, *args, **kwargs):
         order_status = OrderStatus.objects.filter(name='PENDING').values('id').first()
@@ -74,8 +80,8 @@ class OrderViewSet(BaseViewSet):
 
         return Response(res_data, status=status.HTTP_200_OK)
 
-
-
-
-
-
+    def list(self, request, *args, **kwargs):
+        status_query = request.query_params.get("status", "")
+        order = Order.objects.filter(order_status__name__icontains=status_query)
+        self.queryset = order
+        return super().list(request, *args, **kwargs)
