@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
-from api_beer.models import OrderDetail
-from api_beer.models import Order, Cart, Beer, BeerPhoto, BeerDiscount
-from api_beer.serializers import ItemBeerSerializer, OrderSerializer
+from api_order.models import OrderDetail, Order
+from api_beer.models import Cart, Beer, BeerPhoto, BeerDiscount
+from api_beer.serializers import ItemBeerSerializer
+from api_order.serializers import OrderSerializer
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):

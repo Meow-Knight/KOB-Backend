@@ -46,6 +46,7 @@ urlpatterns = [
     url(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     url(r"api/v1/account/", include('api_account.urls')),
     url(r"api/v1/admin/", include('api_admin.urls')),
+    url(r"api/v1/order/", include('api_order.urls')),
     url(r"api/v1/beer/", include('api_beer.urls')),
     url('admin_login', LoginView.as_view(), name='admin_login'),
     url('login', MyGoogleLogin.as_view(), name='login'),
