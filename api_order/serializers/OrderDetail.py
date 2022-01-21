@@ -1,8 +1,9 @@
 from rest_framework import serializers
 
-from api_beer.models import OrderDetail
-from api_beer.models import Order, Cart, Beer, BeerPhoto, BeerDiscount
-from api_beer.serializers import ItemBeerSerializer, OrderSerializer
+from api_order.models import OrderDetail, Order
+from api_beer.models import Cart, Beer, BeerPhoto, BeerDiscount
+from api_beer.serializers import ItemBeerSerializer
+from api_order.serializers import OrderSerializer
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -24,7 +25,6 @@ class OrderDetailBeerSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super(OrderDetailBeerSerializer, self).to_representation(instance)
         beers = data['beer']
-
         beer = Beer.objects.filter(id=beers['id'])
         beer = ItemBeerSerializer(beer, many=True)
         data["beer"] = beer.data
@@ -53,8 +53,8 @@ class OrderHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'total_price', 'total_discount', 'sum_price',
-                  'shipping_address', 'shipping_phone', 'done_at', 'order_status',
+        fields = ('id', 'total_price', 'total_discount',
+                  'shipping_address', 'shipping_phone', 'done_at',
                   'order_detail')
         depth = 1
 

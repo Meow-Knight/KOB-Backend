@@ -1,0 +1,29 @@
+from rest_framework import serializers
+
+from api_order.models import Progress
+from api_order.serializers import RetrieveOrderStatusSerializer
+
+
+class ProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Progress
+        fields = '__all__'
+
+
+class RetrieveProgressSerializer(serializers.ModelSerializer):
+    order_status = RetrieveOrderStatusSerializer()
+
+    def to_representation(self, instance):
+        data = super(RetrieveProgressSerializer, self).to_representation(instance)
+        data['order_status'] = data['order_status'].get('name')
+        return data
+
+    class Meta:
+        model = Progress
+        fields = ['order_status', 'created_at', 'updated_at', ]
+
+
+class ListProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Progress
+        fields = '__all__'

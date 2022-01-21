@@ -32,6 +32,3 @@ class BeerDetailViewSet(BaseViewSet):
         beer = ItemBeerSerializer(queryset, many=True)
         res_data = {"list_beer": beer.data}
         return Response(res_data, status=status.HTTP_200_OK)
-
-
-

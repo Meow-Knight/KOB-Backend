@@ -9,7 +9,7 @@ from rest_framework.utils import json
 import requests
 from rest_framework_simplejwt.tokens import RefreshToken
 
-from api_account.models import Account, Role, User
+from api_account.models import Account, Role
 from api_account.constants import RoleConstants, GoogleLoginConstants
 
 
@@ -72,8 +72,8 @@ class MyGoogleLogin(APIView):
             user_role = Role.objects.get(name=RoleConstants.USER)
             account.role = user_role
             account.save()
-            user = User(account=account)
-            user.save()
+            # user = User(account=account)
+            # user.save()
 
         else:
             account = account_qs.first()
