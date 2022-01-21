@@ -2,8 +2,8 @@ from rest_framework import status
 from rest_framework.permissions import IsAdminUser, IsAuthenticated, AllowAny
 from rest_framework.response import Response
 
-from api_account.serializers import UserSerializer, ListUserSerializer, AccountInfoSerializer, EditUserSerializer
-from api_account.models import User, Account
+from api_account.serializers import UserSerializer, ListUserSerializer, EditUserSerializer
+from api_account.models import Account
 from api_base.views import BaseViewSet
 from rest_framework.decorators import action
 
@@ -11,14 +11,12 @@ from rest_framework.decorators import action
 class UserViewSet(BaseViewSet):
     permission_classes = [IsAdminUser]
     serializer_class = UserSerializer
-    queryset = User.objects.all()
+    queryset = Account.objects.all()
     serializer_map = {
         "list": ListUserSerializer,
         "retrieve": ListUserSerializer
     }
     permission_map = {
-        "create": [IsAuthenticated],
-        "update": [IsAuthenticated],
         "retrieve": [IsAuthenticated]
     }
 
@@ -31,16 +29,16 @@ class UserViewSet(BaseViewSet):
         return Response(response, status=status.HTTP_403_FORBIDDEN)
 
     def list(self, request, *args, **kwargs):
-        query_set = User.objects
+        query_set = Account.objects
         search_query = request.query_params.get("q", "")
-        query_set = query_set.filter(account__first_name__icontains=search_query)
+        query_set = query_set.filter(first_name__icontains=search_query)
         sort_query = request.query_params.get("sort")
         if sort_query:
             try:
                 if sort_query.startswith("-"):
-                    User._meta.get_field(sort_query[1:])
+                    Account._meta.get_field(sort_query[1:])
                 else:
-                    User._meta.get_field(sort_query)
+                    Account._meta.get_field(sort_query)
                 query_set = query_set.order_by(sort_query)
 
             except:
@@ -52,23 +50,18 @@ class UserViewSet(BaseViewSet):
     @action(detail=False, methods=['put'], permission_classes=[IsAuthenticated])
     def edit(self, request, *args, **kwargs):
         account = request.user
-        instance = self.queryset.get(account=account)
+        instance = self.queryset.get(username=account)
         serializer = self.serializer_class(instance, data=request.data, partial=True)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
-        Account.objects.filter(id=account.id)\
-            .update(first_name=request.data["first_name"], last_name=request.data["last_name"])
         return Response(serializer.data)
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
     def detail_user(self, request, *args, **kwargs):
         account = request.user
-        instance = self.queryset.get(account=account)
-        detail_user = UserSerializer(instance)
+        user = self.queryset.get(username=account)
+        detail_user = ListUserSerializer(user)
         res_data = {"user": detail_user.data}
-        account = instance.account
-        detail_account = AccountInfoSerializer(account)
-        res_data["account"] = detail_account.data
         return Response(res_data, status=status.HTTP_200_OK)
 
 

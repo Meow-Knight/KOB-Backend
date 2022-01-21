@@ -2,14 +2,9 @@
 import datetime
 from rest_framework import serializers
 
-from api_beer.models import Order, Cart, Beer, BeerPhoto, BeerDiscount
+from api_beer.models import Cart, Beer, BeerPhoto, BeerDiscount
+from api_order.models import Order
 from api_beer.serializers import ItemBeerSerializer
-
-
-class OrderSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Order
-        fields = '__all__'
 
 
 class OrderCheckoutSerializer(serializers.ModelSerializer):
@@ -27,3 +22,10 @@ class OrderCheckoutSerializer(serializers.ModelSerializer):
         model = Cart
         fields = ('id', 'amount', 'beer',)
         depth = 1
+
+
+class OrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Order
+        fields = '__all__'
+

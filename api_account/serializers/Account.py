@@ -13,3 +13,16 @@ class AccountInfoSerializer(serializers.ModelSerializer):
     class Meta:
         model = Account
         fields = ('first_name', 'last_name', 'username', 'email', 'is_staff')
+
+
+class GeneralInfoAccountSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Account
+        exclude = ('password', 'role', 'is_active', 'is_staff', 'is_superuser')
+
+
+class AccountCheckoutSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Account
+        fields = ['id', 'address', 'phone', 'age', 'first_name', 'last_name', 'email', 'is_staff']
