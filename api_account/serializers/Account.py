@@ -25,4 +25,4 @@ class AccountCheckoutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Account
-        fields = ['id', 'address', 'phone', 'age', 'first_name', 'last_name', 'email']
+        fields = ['id', 'address', 'phone', 'age', 'first_name', 'last_name', 'email', 'is_staff']

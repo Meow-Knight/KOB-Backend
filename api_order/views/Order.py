@@ -13,6 +13,7 @@ from api_beer.serializers import ListBeerSerializer
 from api_order.models import OrderDetail, OrderStatus, Order
 from api_order.serializers import OrderCheckoutSerializer, OrderSerializer, OrderHistorySerializer
 from api_order.services import OrderService
+from api_account.models import Account
 
 
 class OrderViewSet(BaseViewSet):
@@ -24,7 +25,8 @@ class OrderViewSet(BaseViewSet):
         order_status = OrderStatus.objects.filter(name='PENDING').values('id').first()
         account = request.user
         request.data['order_status'] = order_status['id']
-        request.data['account'] = account
+        account = Account.objects.filter(username=account.username).values('id').first()
+        request.data['account'] = account['id']
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             order = serializer.save()
@@ -43,16 +45,16 @@ class OrderViewSet(BaseViewSet):
                     if discount.exists():
                         discount = discount.first()
                     else:
-                        discount = 0
+                        discount = {'discount_percent': 0}
                     order_detail.append(OrderDetail(amount=cart[0], price=price,
-                                                    discount=discount['discount_percent'], beer=beer, order=order))
+                                                    discount_percent=discount['discount_percent'], beer=beer, order=order))
                 OrderDetail.objects.bulk_create(order_detail)
                 Cart.objects.filter(account=account).delete()
                 return Response({"details": serializer.data}, status=status.HTTP_200_OK)
         return Response({"details": "Cannot create new order record"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
-    def info(self, request, *args, **kwargs):
+    def checkout(self, request, *args, **kwargs):
         account = request.user
         detail_user = AccountCheckoutSerializer(account)
         res_data = {"User": detail_user.data}

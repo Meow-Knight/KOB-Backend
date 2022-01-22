@@ -54,7 +54,7 @@ class OrderHistorySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Order
-        fields = ('id', 'total_price', 'total_discount', 'sum_price',
+        fields = ('id', 'total_price', 'total_discount',
                   'shipping_address', 'shipping_phone', 'done_at', 'order_status',
                   'order_detail')
         depth = 1
