@@ -2,8 +2,8 @@ from django.db import transaction
 from django.db.models import Q
 from rest_framework.exceptions import ValidationError
 
-from api_beer.models import BeerDiscount
-from api_beer.serializers import DiscountSerializer, BeerDiscountSerializer
+from api_beer.models import BeerDiscount, Discount, Beer
+from api_beer.serializers import DiscountSerializer, BeerDiscountSerializer, DropdownBeerSerializer
 
 
 class DiscountService:
@@ -39,7 +39,9 @@ class DiscountService:
                     (Q(discount__start_date__lte=discount_start_date)
                      & Q(discount__end_date__gte=discount_start_date))
                     | (Q(discount__start_date__lte=discount_end_date)
-                       & Q(discount__end_date__gte=discount_end_date)),
+                       & Q(discount__end_date__gte=discount_end_date))
+                    | (Q(start_date__gte=discount_start_date)
+                       & Q(start_date__lte=discount_end_date)),
                     beer_id__in=beer_ids
                 )
                 if beer_discounts_existed_query_set.exists():
@@ -52,3 +54,20 @@ class DiscountService:
     def check_unique_beer_discount(cls, beers):
         kkk = set([(beer.get('beer'), beer.get('discount')) for beer in beers])
         return len(kkk) == len(beers)
+
+    @classmethod
+    def get_available_beers(cls, start_date, end_date):
+        xx = Discount.objects.filter((Q(start_date__lte=start_date)
+                                 & Q(end_date__gte=start_date))
+                                | (Q(start_date__lte=end_date)
+                                   & Q(end_date__gte=end_date))
+                                | (Q(start_date__gte=start_date)
+                                   & Q(start_date__lte=end_date))).values("beer_discount__beer")
+        available_beer_qs = Beer.objects.exclude(id__in=Discount.objects.filter((Q(start_date__lte=start_date)
+                                 & Q(end_date__gte=start_date))
+                                | (Q(start_date__lte=end_date)
+                                   & Q(end_date__gte=end_date))
+                                | (Q(start_date__gte=start_date)
+                                   & Q(start_date__lte=end_date))).values("beer_discount__beer")).values('id', 'name')
+
+        return available_beer_qs
