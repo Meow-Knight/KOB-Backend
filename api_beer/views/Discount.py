@@ -18,7 +18,7 @@ class DiscountViewSet(BaseViewSet):
     serializer_map = {
         "retrieve": DetailDiscountSerializer
     }
-    permission_map =  {
+    permission_map = {
         "get_available_beers": []
     }
 
