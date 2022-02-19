@@ -14,6 +14,12 @@ class AccountInfoSerializer(serializers.ModelSerializer):
         model = Account
         fields = ('first_name', 'last_name', 'username', 'email', 'is_staff')
 
+    def to_representation(self, instance):
+        data = super(AccountInfoSerializer, self).to_representation(instance)
+        data['role'] = instance.role.name
+
+        return data
+
 
 class GeneralInfoAccountSerializer(serializers.ModelSerializer):
     class Meta:
