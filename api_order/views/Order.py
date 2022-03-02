@@ -6,14 +6,15 @@ from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
-from api_account.models import Account
 from api_account.serializers import AccountCheckoutSerializer
 from api_base.views import BaseViewSet
 from api_beer.models import Beer, Cart, BeerDiscount
 from api_beer.serializers import ListBeerSerializer
-from api_order.models import OrderDetail, OrderStatus, Order
-from api_order.serializers import OrderHistorySerializer, OrderCheckoutSerializer, OrderSerializer
+from api_order.models import OrderDetail, OrderStatus, Order, Progress
+from api_order.serializers import OrderCheckoutSerializer, OrderSerializer, OrderHistorySerializer, ProgressSerializer
 from api_order.services import OrderService
+from api_account.models import Account
+
 
 
 class OrderViewSet(BaseViewSet):
@@ -24,12 +25,16 @@ class OrderViewSet(BaseViewSet):
     def create(self, request, *args, **kwargs):
         order_status = OrderStatus.objects.filter(name='PENDING').values('id').first()
         account = request.user
-        request.data['order_status'] = order_status['id']
+        dataProgress = {"order_status": order_status['id']}
         account = Account.objects.filter(username=account.username).values('id').first()
         request.data['account'] = account['id']
         serializer = self.get_serializer(data=request.data)
         if serializer.is_valid(raise_exception=True):
             order = serializer.save()
+            dataProgress["order"] = order.id
+            progress = ProgressSerializer(data=dataProgress)
+            if progress.is_valid(raise_exception=True):
+                progress.save()
             order_detail = []
             account = request.user
             carts = Cart.objects.filter(account=account).values_list('amount', 'beer')
@@ -94,3 +99,4 @@ class OrderViewSet(BaseViewSet):
         if res is not None:
             return Response({"detail": res}, status=status.HTTP_200_OK)
         return Response({"detail": 'Order is not exists'}, status=status.HTTP_404_NOT_FOUND)
+      

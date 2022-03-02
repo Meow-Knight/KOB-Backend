@@ -20,4 +20,11 @@ class RetrieveProgressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Progress
-        fields = ['id', 'order_status', 'created_at', 'updated_at', ]
+        fields = ['order_status', 'created_at', 'updated_at', ]
+
+
+class ListProgressSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Progress
+        fields = '__all__'
+

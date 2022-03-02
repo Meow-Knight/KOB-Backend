@@ -1,9 +1,9 @@
 from rest_framework import serializers
 
-from api_beer.models import Beer
+from api_order.models import OrderDetail, Order
+from api_beer.models import Cart, Beer, BeerPhoto, BeerDiscount
 from api_beer.serializers import ItemBeerSerializer
-from api_order.models import Order
-from api_order.models import OrderDetail
+from api_order.serializers import OrderSerializer
 
 
 class OrderDetailSerializer(serializers.ModelSerializer):
@@ -55,7 +55,7 @@ class OrderHistorySerializer(serializers.ModelSerializer):
     class Meta:
         model = Order
         fields = ('id', 'total_price', 'total_discount',
-                  'shipping_address', 'shipping_phone', 'done_at', 'order_status',
+                  'shipping_address', 'shipping_phone', 'done_at',
                   'order_detail')
         depth = 1
 
