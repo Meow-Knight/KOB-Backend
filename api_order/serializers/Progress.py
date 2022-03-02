@@ -27,3 +27,4 @@ class ListProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Progress
         fields = '__all__'
+

@@ -2,9 +2,11 @@
 
 from django.conf import settings
 from django.db import migrations, models
-import django.db.models.deletion
-import django.utils.timezone
 import uuid
+
+import django.utils.timezone
+import django.core.validators
+from django.db import migrations, models
 
 
 class Migration(migrations.Migration):
@@ -54,7 +56,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('name', models.CharField(max_length=50)),
+                ('name', models.CharField(max_length=50, unique=True)),
                 ('start_date', models.DateField()),
                 ('end_date', models.DateField()),
                 ('is_activate', models.BooleanField(default=True)),
@@ -144,7 +146,7 @@ class Migration(migrations.Migration):
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
-                ('discount_percent', models.IntegerField()),
+                ('discount_percent', models.IntegerField(validators=[django.core.validators.MinValueValidator(1), django.core.validators.MaxValueValidator(100)])),
                 ('beer', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='beer_discount', to='api_beer.beer')),
                 ('discount', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, related_name='beer_discount', to='api_beer.discount')),
             ],

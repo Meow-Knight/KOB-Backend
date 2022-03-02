@@ -220,7 +220,7 @@ def initial_data(apps, schema_editor):
     beer_photos = [
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640593230/SGroup/KOB/beers/hei_1_1_ebopev.jpg",
-            beer=beer_hei_1, is_avatar=True),
+            beer=beer_hei_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640593333/SGroup/KOB/beers/hei_1_2_ineoqd.jpg",
             beer=beer_hei_1),
@@ -232,7 +232,7 @@ def initial_data(apps, schema_editor):
             beer=beer_hei_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640593527/SGroup/KOB/beers/hei_2_1_o8fb8g.jpg",
-            beer=beer_hei_2, is_avatar=True),
+            beer=beer_hei_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640593529/SGroup/KOB/beers/hei_2_2_y46lz4.jpg",
             beer=beer_hei_2),
@@ -247,7 +247,7 @@ def initial_data(apps, schema_editor):
             beer=beer_hei_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594112/SGroup/KOB/beers/huda_1_1_y3sod8.jpg",
-            beer=beer_huda_1, is_avatar=True),
+            beer=beer_huda_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594113/SGroup/KOB/beers/huda_1_2_zr2ilf.jpg",
             beer=beer_huda_1),
@@ -262,7 +262,7 @@ def initial_data(apps, schema_editor):
             beer=beer_huda_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594473/SGroup/KOB/beers/huda_2_1_besn1u.jpg",
-            beer=beer_huda_2, is_avatar=True),
+            beer=beer_huda_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594458/SGroup/KOB/beers/huda_2_2_xhqadh.jpg",
             beer=beer_huda_2),
@@ -280,7 +280,7 @@ def initial_data(apps, schema_editor):
             beer=beer_huda_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594726/SGroup/KOB/beers/huda_3_1_c5cpmo.jpg",
-            beer=beer_huda_3, is_avatar=True),
+            beer=beer_huda_3),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594727/SGroup/KOB/beers/huda_3_2_ecyonp.jpg",
             beer=beer_huda_3),
@@ -295,7 +295,7 @@ def initial_data(apps, schema_editor):
             beer=beer_huda_3),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594954/SGroup/KOB/beers/huda_4_1_rdahrj.jpg",
-            beer=beer_huda_4, is_avatar=True),
+            beer=beer_huda_4),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640594458/SGroup/KOB/beers/huda_2_2_xhqadh.jpg",
             beer=beer_huda_4),
@@ -313,7 +313,7 @@ def initial_data(apps, schema_editor):
             beer=beer_huda_4),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595164/SGroup/KOB/beers/bud_1_1_aispie.jpg",
-            beer=beer_budweiser_1, is_avatar=True),
+            beer=beer_budweiser_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595163/SGroup/KOB/beers/bud_1_2_zhcyvl.jpg",
             beer=beer_budweiser_1),
@@ -328,7 +328,7 @@ def initial_data(apps, schema_editor):
             beer=beer_budweiser_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595164/SGroup/KOB/beers/bud_1_1_aispie.jpg",
-            beer=beer_budweiser_2, is_avatar=True),
+            beer=beer_budweiser_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595260/SGroup/KOB/beers/bud_2_2_crugpd.jpg",
             beer=beer_budweiser_2),
@@ -337,7 +337,7 @@ def initial_data(apps, schema_editor):
             beer=beer_budweiser_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595374/SGroup/KOB/beers/corona_1_1_bi6b7a.jpg",
-            beer=beer_corona_1, is_avatar=True),
+            beer=beer_corona_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595374/SGroup/KOB/beers/corona_1_2_lgrhtp.jpg",
             beer=beer_corona_1),
@@ -349,7 +349,7 @@ def initial_data(apps, schema_editor):
             beer=beer_corona_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595617/SGroup/KOB/beers/saporo_1_1_zmpezr.jpg",
-            beer=beer_sapporo_1, is_avatar=True),
+            beer=beer_sapporo_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595617/SGroup/KOB/beers/saporo_1_2_breosk.jpg",
             beer=beer_sapporo_1),
@@ -361,7 +361,7 @@ def initial_data(apps, schema_editor):
             beer=beer_sapporo_1),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595742/SGroup/KOB/beers/saporo_2_1_uipqzd.jpg",
-            beer=beer_sapporo_2, is_avatar=True),
+            beer=beer_sapporo_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595742/SGroup/KOB/beers/saporo_2_2_egjplk.jpg",
             beer=beer_sapporo_2),
@@ -373,7 +373,7 @@ def initial_data(apps, schema_editor):
             beer=beer_sapporo_2),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595853/SGroup/KOB/beers/saporo_3_1_vcqtwx.jpg",
-            beer=beer_sapporo_3, is_avatar=True),
+            beer=beer_sapporo_3),
         beer_photo_model(
             link="https://res.cloudinary.com/ddqzgiilu/image/upload/v1640595853/SGroup/KOB/beers/saporo_3_2_by5epq.jpg",
             beer=beer_sapporo_3),

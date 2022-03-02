@@ -25,6 +25,7 @@ class OrderDetailBeerSerializer(serializers.ModelSerializer):
     def to_representation(self, instance):
         data = super(OrderDetailBeerSerializer, self).to_representation(instance)
         beers = data['beer']
+
         beer = Beer.objects.filter(id=beers['id'])
         beer = ItemBeerSerializer(beer, many=True)
         data["beer"] = beer.data

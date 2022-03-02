@@ -1,4 +1,4 @@
-from django.core.exceptions import ValidationError
+from django.core.validators import MinValueValidator, MaxValueValidator
 from django.db import models
 
 from api_base.models import TimeStampedModel
@@ -6,7 +6,7 @@ from api_beer.models import Beer, Discount
 
 
 class BeerDiscount(TimeStampedModel):
-    discount_percent = models.IntegerField()
+    discount_percent = models.IntegerField(validators=[MinValueValidator(1), MaxValueValidator(100)])
     beer = models.ForeignKey(Beer, on_delete=models.CASCADE, related_name="beer_discount")
     discount = models.ForeignKey(Discount, on_delete=models.CASCADE, related_name="beer_discount")
 

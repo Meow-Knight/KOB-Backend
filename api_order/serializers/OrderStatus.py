@@ -13,3 +13,4 @@ class RetrieveOrderStatusSerializer(serializers.ModelSerializer):
     class Meta:
         model = OrderStatus
         fields = ['name']
+

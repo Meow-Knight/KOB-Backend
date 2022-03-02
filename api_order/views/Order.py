@@ -16,6 +16,7 @@ from api_order.services import OrderService
 from api_account.models import Account
 
 
+
 class OrderViewSet(BaseViewSet):
     permission_classes = [IsAuthenticated]
     serializer_class = OrderSerializer
@@ -68,4 +69,34 @@ class OrderViewSet(BaseViewSet):
 
         return Response(res_data, status=status.HTTP_200_OK)
 
+    @action(detail=False, methods=['get'], permission_classes=[IsAuthenticated])
+    def order_history(self, request, *args, **kwargs):
+        account = request.user
+        status_query = request.query_params.get("status", "")
+        order = Order.objects.filter(Q(account=account) & Q(order_status__name__icontains=status_query))
+        order = OrderHistorySerializer(order, many=True)
+        res_data = {"orders": order.data}
 
+        return Response(res_data, status=status.HTTP_200_OK)
+
+    @action(methods=['put'], detail=False, url_path="admin_change_order_status")
+    def ad_change_order_status(self, request):
+        user = request.user
+        pk = request.data["id"]
+        order = Order.objects.filter(pk=pk)
+        key_change = request.data.get("key_change")
+        if order.exists():
+            res = OrderService.change_order_status(order.first(), key_change, user.role.name)
+            if res is not None:
+                return Response({"detail": res}, status=status.HTTP_200_OK)
+        return Response({"detail": "Order is not exists"}, status=status.HTTP_404_NOT_FOUND)
+
+    @action(methods=['put'], detail=False, url_path='admin_cancel_order')
+    def admin_cancel_order(self, request):
+        pk = request.data.get("id")
+        order = Order.objects.filter(pk=pk)
+        res = OrderService.cancel_order(order)
+        if res is not None:
+            return Response({"detail": res}, status=status.HTTP_200_OK)
+        return Response({"detail": 'Order is not exists'}, status=status.HTTP_404_NOT_FOUND)
+      

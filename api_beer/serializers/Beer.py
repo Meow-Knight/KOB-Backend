@@ -2,7 +2,7 @@ import datetime
 
 from rest_framework import serializers
 
-from api_beer.models import Beer, BeerPhoto, Producer, BeerUnit, Nation, BeerDiscount
+from api_beer.models import Beer, BeerPhoto, BeerDiscount
 from api_beer.serializers import BeerPhotoSerializer
 
 

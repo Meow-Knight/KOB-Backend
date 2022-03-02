@@ -5,7 +5,7 @@ from api_base.models import TimeStampedModel
 
 
 class Discount(TimeStampedModel):
-    name = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, unique=True)
     start_date = models.DateField()
     end_date = models.DateField()
     is_activate = models.BooleanField(default=True)

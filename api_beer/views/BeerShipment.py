@@ -1,7 +1,6 @@
-from api_beer.serializers import BeerShipmentSerializer, ListBeerShipmentSerializer
-from api_beer.models import BeerShipment
 from api_base.views import BaseViewSet
-from rest_framework.response import Response
+from api_beer.models import BeerShipment
+from api_beer.serializers import BeerShipmentSerializer, ListBeerShipmentSerializer
 
 
 class BeerShipmentViewSet(BaseViewSet):

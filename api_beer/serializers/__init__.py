@@ -6,4 +6,6 @@ from .Beer import BeerSerializer, ListBeerSerializer, RetrieveBeerSerializer, It
 from .BeerShipment import BeerShipmentSerializer, ListBeerShipmentSerializer
 from .Cart import CUCartSerializer, BeerDetailCartSerializer
 from .BeerDetail import BeerDetailSerializer, ItemBeerSerializer
-from .Discount import DiscountWithItemBeerSerializer
+from .BeerDiscount import BeerDiscountSerializer, SimplestBeerDiscountSerializer
+from .Discount import DiscountSerializer, DiscountWithItemBeerSerializer, DetailDiscountSerializer
+
